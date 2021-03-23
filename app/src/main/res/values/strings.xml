@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">RubbishSeparator</string>
+    <string name="cancel">cancel</string>
+    <string name="agree">agree</string>
+    <string name="permission_comfirm">permission comfirm</string>
+    <string name="require_permission">require permission for better use</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="app_name">垃圾分类平台</string>
+    <string name="cancel">取消</string>
+    <string name="agree">确定</string>
+    <string name="permission_comfirm">权限确认</string>
+    <string name="require_permission">需要您提供必要的使用权限哦</string>
+</resources>
