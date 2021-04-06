@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/choosePictureFrom"
+    android:background="@drawable/customdialog_1">
+
+   <TextView
+       android:id="@+id/getPicFromPhotos"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:layout_gravity="center"
+       android:text="@string/choosePictureFromPhotos"
+       android:textSize="20sp"
+       android:textColor="@color/stringcolor_black"
+       android:gravity="center"
+       android:background="@drawable/textview_round"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/viewback_grey"/>
+    <TextView
+        android:id="@+id/getPicNow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/choosePictureFromCamera"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:background="@drawable/textview_round"
+        android:textColor="@color/stringcolor_black"/>
+</LinearLayout>

@@ -8,7 +8,7 @@ public class ViewControl {
     //该方法用于防止view的重复点击
     public static boolean avoidRetouch(){
         Long now = System.currentTimeMillis();
-        if((now-lasttime)<500){
+        if((now-lasttime)<100){
             lasttime = now;
             return false;
         } else {

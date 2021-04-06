@@ -158,7 +158,7 @@ public class PermissionActivity extends AppCompatActivity implements TextComfirm
         Display display = windowManager.getDefaultDisplay();
         WindowManager.LayoutParams lp = Objects.requireNonNull(dialog.getWindow()).getAttributes();
         lp.alpha = 0.8f;//设置透明度
-        lp.width = (int) (display.getWidth() * 0.6); //设置宽度
+        lp.width = (int) (display.getWidth() * 0.8); //设置宽度
         dialog.getWindow().setAttributes(lp);
     }
 
@@ -179,7 +179,7 @@ public class PermissionActivity extends AppCompatActivity implements TextComfirm
     /**
      * 启动当前应用设置页面
      */
-    private void startAppSettings() {
+    public void startAppSettings() {
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         intent.setData(Uri.parse("package:" + getPackageName()));
         startActivity(intent);

@@ -16,10 +16,11 @@
     <color name="viewback_white">#FFFFFF</color>
     <color name="viewback_grey">#F0F0F0</color>
     <color name="viewback_darkgrey">#C0C0C0</color>
+    <color name="viewback_blue">#5BD6FF</color>
 
     <!--字体颜色-->
     <color name="stringcolor_black">#000</color>
     <color name="stringcolor_grey">#9E9E9E</color>
     <color name="stringcolor_white">#FFF</color>
-    <color name="stringcolor_blue">#0099CC</color>
+    <color name="stringcolor_blue">#5BD6FF</color>
 </resources>

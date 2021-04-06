@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activity.ShowResult">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/search"/>
+            <TextView
+                android:id="@+id/showresult_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search_result"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:textSize="20sp"
+                android:textColor="@color/stringcolor_black"
+                android:textStyle="bold"/>
+        </LinearLayout>
+        <ListView
+            android:layout_marginTop="10dp"
+            android:id="@+id/showresult_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/showresult_empty"
+        android:layout_width="match_parent"
+        android:layout_marginTop="70dp"
+        android:scaleType="fitXY"
+        android:layout_height="match_parent"
+        android:src="@drawable/empty"
+        android:visibility="invisible"
+        tools:ignore="ContentDescription" />
+</FrameLayout>
