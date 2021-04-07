@@ -21,22 +21,32 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+
+import com.android.volley.Request;
+
 import com.bumptech.glide.Glide;
-import com.itheima.roundedimageview.RoundedImageView;
 import com.maple.rubbishseparator.R;
 import com.maple.rubbishseparator.network.HttpHelper;
+import com.maple.rubbishseparator.network.ServerCode;
+import com.maple.rubbishseparator.network.VollySimpleRequest;
 import com.maple.rubbishseparator.util.StoreState;
 import com.maple.rubbishseparator.util.UploadUtil;
 import com.maple.rubbishseparator.util.ViewControl;
 import com.maple.rubbishseparator.view.CustomDialog_1;
-import com.scrat.app.selectorlibrary.ImageSelector;
+import com.wega.library.loadingDialog.LoadingDialog;
+
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
+import java.util.HashMap;
+
+import java.util.Map;
 import java.util.Objects;
 
 import static java.lang.String.valueOf;
@@ -48,6 +58,8 @@ public class ChangeHead extends PermissionActivity implements View.OnClickListen
     private String IMAGE_FILE_NAME;//图片名称
     private String imageUri;//图片的最终手机地址
 
+
+    private LoadingDialog dialog;
     private ImageView iv_head;
     private Button bt_change;
 
@@ -67,6 +79,7 @@ public class ChangeHead extends PermissionActivity implements View.OnClickListen
         user_id = intent.getStringExtra("user_id");
         phoneNumber = intent.getStringExtra("phoneNumber");
 
+
         initPhotoError();
         fixNetWork();
         init();
@@ -77,8 +90,38 @@ public class ChangeHead extends PermissionActivity implements View.OnClickListen
         bt_change = findViewById(R.id.change_head_change);
 
 
+        decorateLoading();
+        getUserInfo();
         iv_head.setOnClickListener(this);
         bt_change.setOnClickListener(this);
+    }
+
+    private void getUserInfo() {
+        dialog.loading();
+        Map<String, String> params = new HashMap<>();
+        params.put("requestCode", ServerCode.GETID_EFFIT);
+        params.put("Id", user_id);
+        params.put("phoneNumber", phoneNumber);
+
+        VollySimpleRequest.getInstance(this).sendStringRequest(Request.Method.POST, HttpHelper.MAIN_MOBILE, s -> {
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (!jsonObject.getString("headstate").equals("0")) {
+                    String headstate = jsonObject.getString("headstate");
+                    Glide.with(ChangeHead.this).load(headstate).into(iv_head);
+                    dialog.loadSuccess();
+                    dialog.dismiss();
+                } else {
+                    dialog.loadFail();
+                    dialog.dismiss();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, volleyError -> {
+            dialog.loadFail();
+            dialog.dismiss();
+        }, params);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -116,6 +159,7 @@ public class ChangeHead extends PermissionActivity implements View.OnClickListen
             case RESIZE_BACK:
                 //裁剪返回
                 if (data != null) {
+
                     handleImage();
                 }
                 break;
@@ -158,7 +202,8 @@ public class ChangeHead extends PermissionActivity implements View.OnClickListen
     //处理图片
     public void handleImage() {
         File file = new File(imageUri);
-        if (file.exists()) {
+        if (file.exists() && file.length() > 0) {
+
             BufferedInputStream in = null;
             try {
                 in = new BufferedInputStream(new FileInputStream(new File(imageUri)));
@@ -167,21 +212,44 @@ public class ChangeHead extends PermissionActivity implements View.OnClickListen
             }
             Bitmap bitmap = BitmapFactory.decodeStream(in);
             iv_head.setImageBitmap(bitmap);
+            uploadImage();
         }
-
-
-        uploadImage();
     }
 
     //上传图片
     private void uploadImage() {
+        dialog.loading();
         new Thread(() -> {
             UploadUtil uploadUtil = new UploadUtil();
-            uploadUtil.setListener(message -> {
-
-            });
+            uploadUtil.setListener(message -> uploaddata());
             uploadUtil.uploadHttpClient(HttpHelper.upload_file, imageUri, IMAGE_FILE_NAME, user_id);
         }).start();
+    }
+
+    private void uploaddata() {
+        Map<String, String> params = new HashMap<>();
+        params.put("requestCode", ServerCode.CHANGE_HEAD);
+        params.put("Id", user_id);
+        params.put("phoneNumber", phoneNumber);
+        params.put("headstate", HttpHelper.IMAGES + "user" + user_id + "/" + IMAGE_FILE_NAME);
+
+        VollySimpleRequest.getInstance(this).sendStringRequest(Request.Method.POST, HttpHelper.MAIN_MOBILE, s -> {
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.getString("result").equals("1")) {
+                    dialog.loadSuccess();
+                    dialog.dismiss();
+                } else {
+                    dialog.loadFail();
+                    dialog.dismiss();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, volleyError -> {
+            dialog.loadFail();
+            dialog.dismiss();
+        }, params);
     }
 
     /**
@@ -306,6 +374,21 @@ public class ChangeHead extends PermissionActivity implements View.OnClickListen
     public static boolean hasSdcard() {
         String state = Environment.getExternalStorageState();
         return state.equals(Environment.MEDIA_MOUNTED);
+    }
+
+
+    //装饰加载条
+    private void decorateLoading() {
+        if (dialog == null) {
+            LoadingDialog.Builder builder = new LoadingDialog.Builder(this);
+            builder.setLoading_text(getText(R.string.loading))
+                    .setSuccess_text(getText(R.string.success))
+                    .setFail_text(getText(R.string.fail));
+
+            dialog = builder.create();
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setCancelable(false);
+        }
     }
 
 

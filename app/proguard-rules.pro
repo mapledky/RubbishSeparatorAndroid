@@ -27,3 +27,21 @@
 }
 -dontwarn android.net.**
 -keep class android.net.SSLCertificateSocketFactory{*;}
+
+-dontwarn com.amap.api
+-keep  class com.amap.api.maps.**{*;}
+-keep  class com.autonavi.**{*;}
+-keep  class com.amap.api.trace.**{*;}
+
+-keep class com.amap.api.location.**{*;}
+-keep class com.amap.api.fence.**{*;}
+-keep class com.autonavi.aps.amapapi.model.**{*;}
+-keep   class com.amap.api.services.**{*;}
+
+
+# 设置所有 native 方法不被混淆
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+-keep class com.test.** { *; }

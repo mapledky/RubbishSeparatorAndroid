@@ -58,4 +58,27 @@
     <string name="start_compress">开始压缩图片</string>
     <string name="compress_success">压缩成功</string>
     <string name="compress_fail">压缩失败</string>
+    <string name="serach_smartcan">查看周围的智能垃圾桶</string>
+    <string name="detail">详细信息</string>
+    <string name="nearby">附近订单</string>
+    <string name="upload">发布订单</string>
+    <string name="delete">删除?</string>
+    <string name="input_order_title">输入订单名称</string>
+    <string name="input_order_price">输入订单价格</string>
+    <string name="input_order_des">输入订单描述</string>
+    <string name="at_least_one">至少上传一张图片</string>
+    <string name="changename">更改姓名</string>
+    <string name="person_order">个人订单</string>
+    <string name="effient">已完成</string>
+    <string name="change_state">结束订单</string>
+    <string name="inpur_name">输入用户名</string>
+    <string name="upload_name">上传</string>
+    <string name="recycle">可回收垃圾</string>
+    <string name="kitchen">厨余垃圾</string>
+    <string name="other">其他垃圾</string>
+    <string name="harm">有害垃圾</string>
+    <string name="recycle_info">纸类，金属类，塑料，玻璃，废旧织物</string>
+    <string name="harm_info">废电池，废日光灯管，废水银温度计</string>
+    <string name="kitchen_infp">剩菜剩饭，果核，菜叶碎骨，过期食品</string>
+    <string name="other_info">餐盒，餐巾纸，湿纸巾，卫生间用纸</string>
 </resources>

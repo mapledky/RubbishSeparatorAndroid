@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_white"
+    tools:context=".activity.ChangeName">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/changename"
+            android:textColor="@color/stringcolor_black"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+        <EditText
+            android:id="@+id/change_name_inpur"
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:hint="@string/inpur_name"
+            android:textSize="20sp"
+            android:singleLine="true"
+            android:maxLength="12"
+            android:ellipsize="end"
+            android:textColor="@color/stringcolor_black"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="bottom">
+    <Button
+        android:id="@+id/change_name_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textColor="@color/stringcolor_white"
+        android:text="@string/upload_name"
+        android:textStyle="bold"
+        android:background="@drawable/small_corner_button_blue"
+        android:layout_gravity="center_horizontal"/>
+    </FrameLayout>
+</FrameLayout>

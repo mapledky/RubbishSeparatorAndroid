@@ -12,6 +12,7 @@ public class HttpHelper {
 
     public static final String TOKEN_BAIDU = "https://aip.baidubce.com/oauth/2.0/token";//百度token获取地址
 
+    public static final String IMAGES = "https://site.maple.today/cloud/separator/";
     //垃圾分类接口key
     public static final String TIANXIN_KEY ="b5058ccd403dbf6c24d29f1e69fab30d";
 

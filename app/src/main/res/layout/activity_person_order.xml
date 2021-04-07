@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_white"
+    android:orientation="vertical"
+    tools:context=".activity.PersonOrder">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/person_order"
+        android:textColor="@color/stringcolor_black"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/person_order_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/viewback_grey">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <!-- TODO: Update blank fragment layout -->
+        <ListView
+            android:id="@+id/person_order_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:divider="@null" />
+
+        <com.scwang.smartrefresh.layout.footer.BallPulseFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAnimatingColor="@color/viewback_blue" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>

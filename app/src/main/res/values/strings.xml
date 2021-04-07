@@ -57,4 +57,27 @@
     <string name="start_compress">start conpress</string>
     <string name="compress_success">compress success</string>
     <string name="compress_fail">compress fail</string>
+    <string name="serach_smartcan">smart can near by</string>
+    <string name="detail">detail</string>
+    <string name="nearby">near by</string>
+    <string name="upload">upload order</string>
+    <string name="delete">delete</string>
+    <string name="input_order_title">input order title</string>
+    <string name="input_order_price">input order price</string>
+    <string name="input_order_des">input_order_des</string>
+    <string name="at_least_one">at least one image</string>
+    <string name="changename">change name</string>
+    <string name="person_order">person_order</string>
+    <string name="effient">finishorder</string>
+    <string name="change_state">finish</string>
+    <string name="inpur_name">input name</string>
+    <string name="upload_name">upload</string>
+    <string name="recycle">recycle</string>
+    <string name="kitchen">kitchen</string>
+    <string name="other">other</string>
+    <string name="harm">harm</string>
+    <string name="recycle_info">paper,iron,plastic,glass,cloth</string>
+    <string name="harm_info">battery,light</string>
+    <string name="kitchen_infp">left over,fruit,vegetable</string>
+    <string name="other_info">food pakage,tissue,watery paper</string>
 </resources>

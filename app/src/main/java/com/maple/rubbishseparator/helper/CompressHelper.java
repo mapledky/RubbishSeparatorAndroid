@@ -32,12 +32,12 @@ public class CompressHelper {
         float width = bitmap.getWidth();
         float height = bitmap.getHeight();
 
-        if (width > 200) {
+        if (width > 500) {
             float scanle = height / width;
-            float new_width = 200;
+            float new_width = 500;
             float new_height = new_width * scanle;
             Matrix matrix = new Matrix();
-            matrix.postScale(200 / width, new_height / height);
+            matrix.postScale(500 / width, new_height / height);
             bitmap = Bitmap.createBitmap(bitmap, 0, 0, (int) width, (int) height, matrix, false);
         }
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

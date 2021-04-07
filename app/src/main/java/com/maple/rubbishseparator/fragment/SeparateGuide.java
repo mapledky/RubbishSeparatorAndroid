@@ -27,6 +27,7 @@ import com.itheima.roundedimageview.RoundedImageView;
 import com.maple.rubbishseparator.R;
 import com.maple.rubbishseparator.activity.ChangeHead;
 import com.maple.rubbishseparator.activity.MainActivity;
+import com.maple.rubbishseparator.activity.MapActivity;
 import com.maple.rubbishseparator.activity.QRActivity;
 import com.maple.rubbishseparator.activity.SearchActivity;
 import com.maple.rubbishseparator.adapter.GuidePagerAdapter;
@@ -68,6 +69,7 @@ public class SeparateGuide extends Fragment implements View.OnClickListener {
     private SmartRefreshLayout refreshLayout;
     private ViewPager viewPager;
     private LinearLayout layout_getqrcode;//获取二维码
+
     private ImageView iv_qrcode;
     private ImageView iv_record;
     private ImageView iv_takepic;
@@ -178,6 +180,7 @@ public class SeparateGuide extends Fragment implements View.OnClickListener {
                     intent_choosepic.putExtra("type", "1");
                     context.sendBroadcast(intent_choosepic);
                     break;
+
                 default:
                     break;
             }
@@ -321,6 +324,14 @@ public class SeparateGuide extends Fragment implements View.OnClickListener {
         });
         topimage_array.add(iv_2);
         iv_2.setImageDrawable(getResources().getDrawable(R.drawable.top_page_2));
+
+        final RoundedImageView iv_3 = new RoundedImageView(context);
+        iv_3.setCornerRadius(25);
+        iv_3.setOnClickListener(v -> {
+            //轮播图点击事件的响应
+        });
+        topimage_array.add(iv_3);
+        iv_3.setImageDrawable(getResources().getDrawable(R.drawable.top_page_3));
         adapter_guide.notifyDataSetChanged();
     }
 

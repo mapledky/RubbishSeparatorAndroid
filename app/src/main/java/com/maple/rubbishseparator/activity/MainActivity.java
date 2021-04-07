@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 
@@ -28,6 +29,7 @@ import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
 
 import com.android.volley.Request;
 import com.maple.rubbishseparator.R;
@@ -58,7 +60,10 @@ import java.io.File;
 import java.io.FileInputStream;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -68,7 +73,7 @@ import static java.lang.String.valueOf;
 public class MainActivity extends PermissionActivity implements TextComfirmDialog.OnButtomClickedListener, View.OnClickListener, RecordDialog.RecordBack {
     String user_id;//用户id
     String phoneNumber;//电话号码
-    String baiduToken;//百度token
+
 
     //dialog编号
     public final int dialog_1 = 101;//跳转到权限选择界面
@@ -275,10 +280,80 @@ public class MainActivity extends PermissionActivity implements TextComfirmDialo
         registerExitLoginListener();//退出登陆
         registerRecordListener();//语音识别
         registerDetectPhotoListener();//识别图片广播
-
+        registerUploadOrderListener();//上传订单的广播
+        registerChangeNameReceiver();//更改用户名
+        registertoPersonOrderListener();//前往个人订单页面
+        registerChangeNameListener();//修改用户名
         initPhotoError();
         fixNetWork();
     }
+
+    //修改用户名
+    private class ChangeNameListener extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (user_id != null && phoneNumber != null) {
+                Intent intent_tochangename = new Intent(MainActivity.this, ChangeName.class);
+                intent_tochangename.putExtra("user_id", user_id);
+                intent_tochangename.putExtra("phoneNumber", phoneNumber);
+                startActivity(intent_tochangename);
+            }
+        }
+    }
+
+    private void registerChangeNameListener() {
+        ChangeNameListener chanagename = new ChangeNameListener();
+        IntentFilter intentFilter = new IntentFilter("com.maple.changeNameReceiver");
+        registerReceiver(chanagename, intentFilter);
+
+    }
+
+
+    //前往个人订单页面
+    private class ToPersonOrderReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (user_id != null && phoneNumber != null) {
+                Intent intent_topersonorder = new Intent(MainActivity.this, PersonOrder.class);
+                intent_topersonorder.putExtra("user_id", user_id);
+                intent_topersonorder.putExtra("phoneNumber", phoneNumber);
+                startActivity(intent_topersonorder);
+            }
+        }
+    }
+
+    private void registertoPersonOrderListener() {
+        ToPersonOrderReceiver toPersonReceiver = new ToPersonOrderReceiver();
+        IntentFilter intentFilter = new IntentFilter("com.maple.orderReceiver");
+        registerReceiver(toPersonReceiver, intentFilter);
+
+    }
+
+
+    //上传订单广播
+    private class UploadOrderReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (user_id != null && phoneNumber != null) {
+                Intent intent_upload = new Intent(MainActivity.this, UploadOrder.class);
+                intent_upload.putExtra("user_id", user_id);
+                intent_upload.putExtra("phoneNumber", phoneNumber);
+                intent_upload.putExtra("latitude", intent.getStringExtra("latitude"));
+                intent_upload.putExtra("longitude", intent.getStringExtra("longitude"));
+                startActivity(intent_upload);
+
+            }
+        }
+    }
+
+
+    private void registerUploadOrderListener() {
+        UploadOrderReceiver uploadReceiver = new UploadOrderReceiver();
+        IntentFilter intentFilter = new IntentFilter("com.maple.uploadOrderListener");
+        registerReceiver(uploadReceiver, intentFilter);
+
+    }
+
 
     //请求调用图片识别功能
 
@@ -664,6 +739,23 @@ public class MainActivity extends PermissionActivity implements TextComfirmDialo
         registerReceiver(receiver, intentFilter);
     }
 
+
+    //换名称
+
+    private class ChangeNameBroadcast extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+        }
+    }
+
+    private void registerChangeNameReceiver() {
+        ChangeNameBroadcast baudrateReceiver = new ChangeNameBroadcast();
+        IntentFilter intentFilter = new IntentFilter("com.maple.changeNameReceiver");
+        registerReceiver(baudrateReceiver, intentFilter);
+    }
+
+
     //接受更改头像
     private class ChangeHeadBroadcast extends BroadcastReceiver {
         @Override
@@ -711,8 +803,8 @@ public class MainActivity extends PermissionActivity implements TextComfirmDialo
         int result_location = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         int result_location2 = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
         int result_getlocaton = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS);
-        if (result_package == PackageManager.PERMISSION_DENIED || result == PackageManager.PERMISSION_DENIED || result_ == PackageManager.PERMISSION_DENIED || result_location == PackageManager.PERMISSION_DENIED || result_location2 == PackageManager.PERMISSION_DENIED || result_network == PackageManager.PERMISSION_DENIED || result_networkstate == PackageManager.PERMISSION_DENIED || result_networkwifi == PackageManager.PERMISSION_DENIED || result_getlocaton == PackageManager.PERMISSION_DENIED)  {
-            String[] permissions = {Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.INTERNET,Manifest.permission.ACCESS_NETWORK_STATE,Manifest.permission.ACCESS_WIFI_STATE};
+        if (result_package == PackageManager.PERMISSION_DENIED || result == PackageManager.PERMISSION_DENIED || result_ == PackageManager.PERMISSION_DENIED || result_location == PackageManager.PERMISSION_DENIED || result_location2 == PackageManager.PERMISSION_DENIED || result_network == PackageManager.PERMISSION_DENIED || result_networkstate == PackageManager.PERMISSION_DENIED || result_networkwifi == PackageManager.PERMISSION_DENIED || result_getlocaton == PackageManager.PERMISSION_DENIED) {
+            String[] permissions = {Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.ACCESS_WIFI_STATE};
             requestPermission(permissions, 0x0001);
             return false;
         } else {
@@ -787,6 +879,30 @@ public class MainActivity extends PermissionActivity implements TextComfirmDialo
         loadingDialog = builder.create();
         loadingDialog.setCanceledOnTouchOutside(false);
         loadingDialog.setCancelable(false);
+    }
+
+    public String sHA1(Context context) {
+        try {
+            @SuppressLint("PackageManagerGetSignatures") PackageInfo info = context.getPackageManager().getPackageInfo(
+                    context.getPackageName(), PackageManager.GET_SIGNATURES);
+            byte[] cert = info.signatures[0].toByteArray();
+            MessageDigest md = MessageDigest.getInstance("SHA1");
+            byte[] publicKey = md.digest(cert);
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : publicKey) {
+                String appendString = Integer.toHexString(0xFF & b)
+                        .toUpperCase(Locale.US);
+                if (appendString.length() == 1)
+                    hexString.append("0");
+                hexString.append(appendString);
+                hexString.append(":");
+            }
+            String result = hexString.toString();
+            return result.substring(0, result.length() - 1);
+        } catch (PackageManager.NameNotFoundException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

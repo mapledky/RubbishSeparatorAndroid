@@ -20,7 +20,7 @@
         android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
@@ -43,9 +43,19 @@
         android:theme="@style/Theme.RubbishSeparator"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute">
-        <meta-data android:name="com.amap.api.v2.apikey" android:value="68e116b090093d2517da8a636d7b63e8">
-        </meta-data>
-        <activity android:name=".activity.ShowBaiduResult"/>
+        <activity android:name=".activity.ChangeName"></activity>
+        <activity android:name=".activity.PersonOrder" />
+        <activity android:name=".activity.OrderDetail" />
+        <activity android:name=".activity.UploadOrder" />
+        <activity
+            android:name=".activity.MapActivity"
+            android:screenOrientation="portrait" />
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="68e116b090093d2517da8a636d7b63e8" />
+
+        <activity android:name=".activity.ShowBaiduResult" />
         <activity android:name=".activity.ShowResult" />
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".activity.QRActivity" />

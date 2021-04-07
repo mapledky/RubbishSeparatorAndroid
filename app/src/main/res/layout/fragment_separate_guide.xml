@@ -24,7 +24,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:scaleType="fitXY"
-            android:src="@drawable/person"
+            android:src="@drawable/logo"
             app:riv_oval="true"
             tools:ignore="ContentDescription" />
 
@@ -80,88 +80,269 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="200dp">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    <androidx.viewpager.widget.ViewPager
-                        android:id="@+id/guide_viewpager"
+
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="200dp">
+
+                        <androidx.viewpager.widget.ViewPager
+                            android:id="@+id/guide_viewpager"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/toppage" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="5dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/guide_record"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:src="@drawable/voice_recognize"
+                            tools:ignore="ContentDescription" />
+
+                        <ImageView
+                            android:id="@+id/guide_takepic"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:src="@drawable/photo_recognize"
+                            tools:ignore="ContentDescription" />
+
+
+                        <ImageView
+                            android:id="@+id/guide_choosepic"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:src="@drawable/pic_recognize"
+                            tools:ignore="ContentDescription" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/guide_getQrCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="@drawable/toppage" />
-                </FrameLayout>
+                        android:background="@color/viewback_grey"
+                        android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="5dp"
-                    android:orientation="horizontal">
+                        <ImageView
+                            android:id="@+id/guide_qrcode_pic"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:src="@drawable/logo"
+                            tools:ignore="ContentDescription" />
 
-                    <ImageView
-                        android:id="@+id/guide_record"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:src="@drawable/voice_recognize"
-                        tools:ignore="ContentDescription" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:text="@string/getuserqrcode"
+                            android:textColor="@color/stringcolor_black"
+                            android:textSize="20sp" />
+                    </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/guide_takepic"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:src="@drawable/photo_recognize"
-                        tools:ignore="ContentDescription" />
-
-
-                    <ImageView
-                        android:id="@+id/guide_choosepic"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:src="@drawable/pic_recognize"
-                        tools:ignore="ContentDescription" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/guide_getQrCode"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@color/viewback_grey"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/guide_qrcode_pic"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="10dp"
-                        android:src="@drawable/logo"
-                        tools:ignore="ContentDescription" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="10dp"
-                        android:text="@string/getuserqrcode"
-                        android:textColor="@color/stringcolor_black"
-                        android:textSize="20sp" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/recycle"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/recycle_icon" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="@string/recycle"
+                                android:textColor="@color/stringcolor_white"
+                                android:textSize="25sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:inputType="textMultiLine"
+                                android:text="@string/recycle_info"
+                                android:textColor="@color/stringcolor_white"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                tools:ignore="TextViewEdits" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/kitchen"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/kitchen_icon" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="@string/kitchen"
+                                android:textColor="@color/stringcolor_white"
+                                android:textSize="25sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:inputType="textMultiLine"
+                                android:text="@string/kitchen_infp"
+                                android:textColor="@color/stringcolor_white"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                tools:ignore="TextViewEdits" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/harm"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/harmful_icon" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="@string/harm"
+                                android:textColor="@color/stringcolor_white"
+                                android:textSize="25sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:inputType="textMultiLine"
+                                android:text="@string/harm_info"
+                                android:textColor="@color/stringcolor_white"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                tools:ignore="TextViewEdits" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/other"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/other_icon" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="@string/other"
+                                android:textColor="@color/stringcolor_white"
+                                android:textSize="25sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:inputType="textMultiLine"
+                                android:text="@string/other_info"
+                                android:textColor="@color/stringcolor_white"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                tools:ignore="TextViewEdits" />
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+            </ScrollView>
 
             <com.scwang.smartrefresh.layout.footer.BallPulseFooter
                 android:id="@+id/guide_refreshlayout_footer"

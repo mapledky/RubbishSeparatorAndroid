@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.util.LruCache;
 import android.widget.ImageView;
 
-import com.android.volley.AuthFailureError;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;

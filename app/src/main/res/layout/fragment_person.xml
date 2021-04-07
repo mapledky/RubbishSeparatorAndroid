@@ -96,36 +96,153 @@
                 android:layout_height="10dp"
                 android:layout_marginTop="30dp"
                 android:background="@color/viewback_grey" />
+
             <LinearLayout
-                android:id="@+id/person_exit"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:id="@+id/person_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
                 android:orientation="horizontal">
+
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:src="@drawable/exit"/>
+                    android:src="@drawable/incomeanalyse" />
+
                 <TextView
-                    android:layout_marginStart="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
                     android:gravity="center_vertical"
-                    android:text="@string/exit_login"
-                    android:textSize="20sp"
-                    android:textColor="@color/stringcolor_black"/>
+                    android:text="@string/person_order"
+                    android:textColor="@color/stringcolor_black"
+                    android:textSize="20sp" />
+
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <ImageView
                         android:layout_width="35dp"
-                        android:layout_gravity="end"
                         android:layout_height="35dp"
-                        android:src="@drawable/toinfo"/>
+                        android:layout_gravity="end"
+                        android:src="@drawable/toinfo" />
                 </FrameLayout>
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/viewback_grey" />
+
+            <LinearLayout
+                android:id="@+id/person_changename"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/person" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/changename"
+                    android:textColor="@color/stringcolor_black"
+                    android:textSize="20sp" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="end"
+                        android:src="@drawable/toinfo" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/person_changehead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/logo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/changeHead"
+                    android:textColor="@color/stringcolor_black"
+                    android:textSize="20sp" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="end"
+                        android:src="@drawable/toinfo" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/person_exit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/exit" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/exit_login"
+                    android:textColor="@color/stringcolor_black"
+                    android:textSize="20sp" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="end"
+                        android:src="@drawable/toinfo" />
+                </FrameLayout>
+            </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"

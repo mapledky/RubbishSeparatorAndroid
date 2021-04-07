@@ -23,4 +23,10 @@
     <color name="stringcolor_grey">#9E9E9E</color>
     <color name="stringcolor_white">#FFF</color>
     <color name="stringcolor_blue">#5BD6FF</color>
+    <color name="stringcolor_red">#FF0000</color>
+
+    <color name="recycle">#4895F8</color>
+    <color name="harm">#FF5756</color>
+    <color name="kitchen">#7DA845</color>
+    <color name="other">#F6BF34</color>
 </resources>

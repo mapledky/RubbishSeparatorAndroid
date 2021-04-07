@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -56,6 +57,9 @@ public class Person extends Fragment implements View.OnClickListener {
     private TextView tv_phoneNumber;
     private ImageView iv_qrcode;
     private LinearLayout layout_exit;
+    private LinearLayout layout_changehead;
+    private LinearLayout layout_changename;
+    private LinearLayout layout_order;
 
 
     private LoadingDialog dialog;
@@ -79,7 +83,7 @@ public class Person extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         if (rootview == null) {
@@ -90,8 +94,14 @@ public class Person extends Fragment implements View.OnClickListener {
             iv_qrcode = rootview.findViewById(R.id.person_sqcode);
             refreshLayout = rootview.findViewById(R.id.person_refresh);
             layout_exit = rootview.findViewById(R.id.person_exit);
+            layout_changehead = rootview.findViewById(R.id.person_changehead);
+            layout_changename = rootview.findViewById(R.id.person_changename);
+            layout_order = rootview.findViewById(R.id.person_order);
 
 
+            layout_order.setOnClickListener(this);
+            layout_changename.setOnClickListener(this);
+            layout_changehead.setOnClickListener(this);
             layout_exit.setOnClickListener(this);
             iv_head.setOnClickListener(this);
             tv_name.setOnClickListener(this);
@@ -104,7 +114,6 @@ public class Person extends Fragment implements View.OnClickListener {
 
 
     private void init() {
-
         decoratePane(refreshLayout);
         attachRefreshListener();
         refreshLayout.setEnableLoadMore(false);
@@ -119,6 +128,16 @@ public class Person extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if (ViewControl.avoidRetouch()) {
             switch (v.getId()) {
+                case R.id.person_changename:
+                    Intent intent_changename = new Intent();
+                    intent_changename.setAction("com.maple.changeNameReceiver");
+                    context.sendBroadcast(intent_changename);
+                    break;
+                case R.id.person_changehead:
+                    Intent intent_changehead = new Intent();
+                    intent_changehead.setAction("com.maple.changeHeadReceiver");
+                    context.sendBroadcast(intent_changehead);
+                    break;
                 case R.id.person_head:
                     break;
                 case R.id.person_name:
@@ -130,10 +149,16 @@ public class Person extends Fragment implements View.OnClickListener {
                     showQRCode();
                     break;
 
+                case R.id.person_order:
+                    Intent intent_order = new Intent();
+                    intent_order.setAction("com.maple.orderReceiver");
+                    context.sendBroadcast(intent_order);
+                    break;
+
                 case R.id.person_exit:
-                    Intent intent = new Intent();
-                    intent.setAction("com.maple.exitLoginReceiver");
-                    context.sendBroadcast(intent);
+                    Intent intent_exit = new Intent();
+                    intent_exit.setAction("com.maple.exitLoginReceiver");
+                    context.sendBroadcast(intent_exit);
                     break;
                 default:
                     break;

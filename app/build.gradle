@@ -7,6 +7,11 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+    sourceSets{
+        main {
+            jniLibs.srcDirs = ['jni'];
+        }
+    }
     defaultConfig {
         applicationId "com.maple.rubbishseparator"
         minSdkVersion 21
@@ -16,26 +21,18 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        ndk {
-            //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
-            abiFilters "armeabi"
-        }
 
     }
 
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-        }
-        debug.setRoot('build-types/debug')
-        release.setRoot('build-types/release')
-    }
+
+
+
     signingConfigs {
         release {
-            storeFile file("../maplekey.keystore")
+            storeFile file("../rubbishseparator.keystore")
             //keystore 文件名，文件放入该module文件夹下
             storePassword "20001005"        //keystore 密码
-            keyAlias "android-alias"                //别名
+            keyAlias "key0"                //别名
             keyPassword "20001005"        //别名密码
         }
     }
@@ -45,11 +42,10 @@ android {
             signingConfig signingConfigs.release
         }
         release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -81,8 +77,6 @@ dependencies {
 
 
 
-    implementation 'com.mcxiaoke.volley:library:1.0.19'
-    //网络请求
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     //图片加载
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
