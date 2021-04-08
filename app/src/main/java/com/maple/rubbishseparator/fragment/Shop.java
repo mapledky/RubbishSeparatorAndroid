@@ -30,7 +30,6 @@ import com.maple.rubbishseparator.util.UserOrder;
 import com.maple.rubbishseparator.util.ViewControl;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.wega.library.loadingDialog.LoadingDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,12 +39,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import dmax.dialog.SpotsDialog;
+
 public class Shop extends Fragment implements AMapLocationListener, View.OnClickListener {
 
     private View rootview;
     private SmartRefreshLayout refreshLayout;
     private ListView listView;
-    private LoadingDialog dialog;
+    private SpotsDialog dialog;
     private ImageView iv_add;
 
     //data
@@ -109,7 +110,7 @@ public class Shop extends Fragment implements AMapLocationListener, View.OnClick
     private void initLocation() {
         presentOrder.clear();
         allorder.clear();
-        dialog.loading();
+        dialog.show();
         refreshLayout.setEnableRefresh(false);
         refreshLayout.setEnableLoadMore(false);
 
@@ -144,7 +145,6 @@ public class Shop extends Fragment implements AMapLocationListener, View.OnClick
 
             }
         } else {
-            dialog.loadFail();
             dialog.dismiss();
             Toast.makeText(context, getString(R.string.fail), Toast.LENGTH_SHORT).show();
             refreshLayout.finishRefresh();
@@ -198,7 +198,6 @@ public class Shop extends Fragment implements AMapLocationListener, View.OnClick
                 listView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
 
-                dialog.loadSuccess();
                 //刷新成功
                 refreshLayout.finishRefresh();
                 refreshLayout.finishLoadMore();
@@ -211,7 +210,6 @@ public class Shop extends Fragment implements AMapLocationListener, View.OnClick
                 refreshLayout.finishLoadMore();
                 refreshLayout.setEnableLoadMore(true);
                 refreshLayout.setEnableRefresh(true);
-                dialog.loadFail();
                 dialog.dismiss();
                 e.printStackTrace();
             }
@@ -220,7 +218,6 @@ public class Shop extends Fragment implements AMapLocationListener, View.OnClick
             refreshLayout.finishLoadMore();
             refreshLayout.setEnableLoadMore(true);
             refreshLayout.setEnableRefresh(true);
-            dialog.loadFail();
             dialog.dismiss();
         }, params);
     }
@@ -285,14 +282,8 @@ public class Shop extends Fragment implements AMapLocationListener, View.OnClick
     //装饰加载条
     private void decorateLoading() {
         if (dialog == null) {
-            LoadingDialog.Builder builder = new LoadingDialog.Builder(context);
-            builder.setLoading_text(getText(R.string.loading))
-                    .setSuccess_text(getText(R.string.success))
-                    .setFail_text(getText(R.string.fail));
-
-            dialog = builder.create();
+            dialog = new SpotsDialog(context);
             dialog.setCanceledOnTouchOutside(false);
-            dialog.setCancelable(false);
         }
     }
 

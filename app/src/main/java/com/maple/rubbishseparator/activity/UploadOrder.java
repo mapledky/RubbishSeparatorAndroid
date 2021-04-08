@@ -39,7 +39,6 @@ import com.maple.rubbishseparator.util.StoreState;
 import com.maple.rubbishseparator.util.UploadUtil;
 import com.maple.rubbishseparator.util.ViewControl;
 import com.maple.rubbishseparator.view.CustomDialog_1;
-import com.wega.library.loadingDialog.LoadingDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,6 +53,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import dmax.dialog.SpotsDialog;
 
 import static java.lang.String.valueOf;
 
@@ -72,7 +73,7 @@ public class UploadOrder extends PermissionActivity implements View.OnClickListe
 
     //view
     private GridLayout gridView;
-    private LoadingDialog dialog;
+    private SpotsDialog dialog;
     private ImageView iv_addpic;//添加图片
 
     private EditText et_inputname;
@@ -170,7 +171,7 @@ public class UploadOrder extends PermissionActivity implements View.OnClickListe
             Toast.makeText(this, getString(R.string.input_order_des), Toast.LENGTH_SHORT).show();
             return;
         }
-        dialog.loading();
+        dialog.show();
         //上传图片
         uploadImage();
     }
@@ -228,7 +229,6 @@ public class UploadOrder extends PermissionActivity implements View.OnClickListe
         params.put("phoneNumber", phoneNumber);
 
         VollySimpleRequest.getInstance(this).sendStringRequest(Request.Method.POST, HttpHelper.MAIN_MOBILE, s -> {
-            dialog.loadSuccess();
             dialog.dismiss();
             try {
                 JSONObject jsonObject = new JSONObject(s);
@@ -241,7 +241,6 @@ public class UploadOrder extends PermissionActivity implements View.OnClickListe
                 e.printStackTrace();
             }
         }, volleyError -> {
-            dialog.loadFail();
             dialog.dismiss();
         }, params);
     }
@@ -456,14 +455,8 @@ public class UploadOrder extends PermissionActivity implements View.OnClickListe
     //装饰加载条
     private void decorateLoading() {
         if (dialog == null) {
-            LoadingDialog.Builder builder = new LoadingDialog.Builder(this);
-            builder.setLoading_text(getText(R.string.loading))
-                    .setSuccess_text(getText(R.string.success))
-                    .setFail_text(getText(R.string.fail));
-
-            dialog = builder.create();
+            dialog = new SpotsDialog(this);
             dialog.setCanceledOnTouchOutside(false);
-            dialog.setCancelable(false);
         }
     }
 

@@ -13,7 +13,7 @@ import com.maple.rubbishseparator.R;
 import com.maple.rubbishseparator.network.HttpHelper;
 import com.maple.rubbishseparator.network.ServerCode;
 import com.maple.rubbishseparator.network.VollySimpleRequest;
-import com.wega.library.loadingDialog.LoadingDialog;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,11 +23,13 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import dmax.dialog.SpotsDialog;
+
 public class SplashActivity extends PermissionActivity {
     private String Id;//缓存中的id
     private String phoneNumber;//缓存中的电话号码
 
-    private LoadingDialog loadingDialog;//加载
+    private SpotsDialog loadingDialog;//加载
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +71,7 @@ public class SplashActivity extends PermissionActivity {
 
     //id有效性判断
     private void judgeId() {
-        loadingDialog.loading();
+        loadingDialog.show();
         Map<String, String> params = new HashMap<>();
         params.put("requestCode", ServerCode.GETID_EFFIT);
         params.put("Id", Id);
@@ -81,7 +83,6 @@ public class SplashActivity extends PermissionActivity {
                 if (result.equals("1")) {
                     //id有效,成功
                     jumpToMain(1);
-                    loadingDialog.loadSuccess();
                 } else {
                     //清空缓存数据
                     SharedPreferences sharedPreferences = getSharedPreferences("account", Context.MODE_PRIVATE);
@@ -89,17 +90,14 @@ public class SplashActivity extends PermissionActivity {
                     editor.clear();
                     editor.apply();
                     jumpToMain(0);
-                    loadingDialog.loadFail();
                 }
                 loadingDialog.dismiss();
             } catch (JSONException e) {
                 jumpToMain(0);
-                loadingDialog.loadFail();
                 loadingDialog.dismiss();
                 e.printStackTrace();
             }
         }, error -> {
-            loadingDialog.loadFail();
             loadingDialog.dismiss();
             jumpToMain(0);
         }, params);
@@ -122,12 +120,7 @@ public class SplashActivity extends PermissionActivity {
 
     //装饰加载条
     private void decorateLoading() {
-        LoadingDialog.Builder builder = new LoadingDialog.Builder(this);
-        builder.setLoading_text(getText(R.string.loading))
-                .setSuccess_text(getText(R.string.success))
-                .setFail_text(getText(R.string.fail));
-        loadingDialog = builder.create();
+        loadingDialog = new SpotsDialog(this);
         loadingDialog.setCanceledOnTouchOutside(false);
-        loadingDialog.setCancelable(false);
     }
 }

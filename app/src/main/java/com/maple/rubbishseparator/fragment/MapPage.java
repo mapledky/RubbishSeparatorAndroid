@@ -82,6 +82,16 @@ public class MapPage extends Fragment implements AMap.OnMyLocationChangeListener
         return rootview;
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {
+            mapView.setVisibility(View.INVISIBLE);
+        } else {
+            mapView.setVisibility(View.VISIBLE);
+        }
+    }
+
 
     private void initMap() {
         MyLocationStyle myLocationStyle;

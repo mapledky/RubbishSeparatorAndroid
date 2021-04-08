@@ -88,7 +88,7 @@ dependencies {
     //noinspection GradleCompatible
     implementation 'com.android.support:percent:22.2.0'
     //加载控件
-    implementation 'com.github.LinweiJ:LoadingDialog:V0.0.1'
+    implementation 'com.github.open-android:Loading:1.0'
     //下拉
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
     //微信分享

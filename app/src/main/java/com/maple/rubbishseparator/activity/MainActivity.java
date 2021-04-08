@@ -50,7 +50,7 @@ import com.tencent.cloud.qcloudasrsdk.common.QCloudSourceType;
 import com.tencent.cloud.qcloudasrsdk.models.QCloudFileRecognitionParams;
 import com.tencent.cloud.qcloudasrsdk.recognizer.QCloudFileRecognizer;
 
-import com.wega.library.loadingDialog.LoadingDialog;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,6 +67,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+
+import dmax.dialog.SpotsDialog;
 
 import static java.lang.String.valueOf;
 
@@ -85,7 +87,7 @@ public class MainActivity extends PermissionActivity implements TextComfirmDialo
     private TextView tv_shop;
     private TextView tv_person;
 
-    private LoadingDialog loadingDialog;
+    private SpotsDialog loadingDialog;
 
     //fragment
     private SeparateGuide fragment_guide;//垃圾分类指南页面
@@ -422,7 +424,6 @@ public class MainActivity extends PermissionActivity implements TextComfirmDialo
         if (file.exists()) {
             if (file.length() != 0) {
                 //压缩图片后,上传百度云识别
-                loadingDialog.loading();
                 if (file.length() >= 25 * 1024) {
                     compresspic();
                 } else {
@@ -438,7 +439,6 @@ public class MainActivity extends PermissionActivity implements TextComfirmDialo
     }
 
     private void detectPic(String file_state) {
-        loadingDialog.loadSuccess();
         loadingDialog.dismiss();
         Intent intent = new Intent(this, ShowBaiduResult.class);
         intent.putExtra("imageurl", file_state);
@@ -569,7 +569,6 @@ public class MainActivity extends PermissionActivity implements TextComfirmDialo
     public void recordBack(String url) {
         File file = new File(url);
         if (file.exists()) {
-            loadingDialog.loading();
             //获取腾讯id
             Map<String, String> params = new HashMap<>();
             params.put("requestCode", ServerCode.GET_TENCENT_ID);
@@ -583,7 +582,6 @@ public class MainActivity extends PermissionActivity implements TextComfirmDialo
                 }
             }, error -> {
                 Toast.makeText(MainActivity.this, getString(R.string.fail), Toast.LENGTH_SHORT).show();
-                loadingDialog.loadFail();
                 loadingDialog.dismiss();
             }, params);
         }
@@ -605,7 +603,6 @@ public class MainActivity extends PermissionActivity implements TextComfirmDialo
                     break;
                 case 2:
                     //任务成功
-                    loadingDialog.loadSuccess();
                     loadingDialog.dismiss();
                     Intent intent = new Intent(MainActivity.this, ShowResult.class);
                     String search_target = s.substring(19, s.length() - 2);
@@ -614,7 +611,6 @@ public class MainActivity extends PermissionActivity implements TextComfirmDialo
                     break;
                 case 3:
                     //任务失败
-                    loadingDialog.loadFail();
                     loadingDialog.dismiss();
                     Toast.makeText(MainActivity.this, getString(R.string.fail), Toast.LENGTH_SHORT);
                     break;
@@ -872,13 +868,8 @@ public class MainActivity extends PermissionActivity implements TextComfirmDialo
 
     //装饰加载条
     private void decorateLoading() {
-        LoadingDialog.Builder builder = new LoadingDialog.Builder(this);
-        builder.setLoading_text(getText(R.string.loading))
-                .setSuccess_text(getText(R.string.success))
-                .setFail_text(getText(R.string.fail));
-        loadingDialog = builder.create();
+        loadingDialog = new SpotsDialog(this);
         loadingDialog.setCanceledOnTouchOutside(false);
-        loadingDialog.setCancelable(false);
     }
 
     public String sHA1(Context context) {

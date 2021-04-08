@@ -29,17 +29,17 @@ import com.maple.rubbishseparator.network.ServerCode;
 import com.maple.rubbishseparator.network.VollySimpleRequest;
 import com.maple.rubbishseparator.util.QRCode;
 import com.maple.rubbishseparator.util.ViewControl;
-import com.maple.rubbishseparator.view.PercentLinearLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.wega.library.loadingDialog.LoadingDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
+
 
 import java.util.HashMap;
 import java.util.Map;
+
+import dmax.dialog.SpotsDialog;
 
 
 public class Person extends Fragment implements View.OnClickListener {
@@ -62,7 +62,7 @@ public class Person extends Fragment implements View.OnClickListener {
     private LinearLayout layout_order;
 
 
-    private LoadingDialog dialog;
+    private SpotsDialog dialog;
 
     public Person() {
         // Required empty public constructor
@@ -179,7 +179,7 @@ public class Person extends Fragment implements View.OnClickListener {
     //获取用户信息
     public void getUserInfo() {
         if (user_id != null && phoneNumber != null) {
-            dialog.loading();
+            dialog.show();
             Map<String, String> params = new HashMap<>();
             params.put("requestCode", ServerCode.GETID_EFFIT);
             params.put("Id", user_id);
@@ -194,7 +194,6 @@ public class Person extends Fragment implements View.OnClickListener {
                         name = jsonObject.getString("username");
 
                         refreshPage();
-                        dialog.loadSuccess();
                     }
 
                     //刷新成功
@@ -205,14 +204,12 @@ public class Person extends Fragment implements View.OnClickListener {
                     //刷新成功
                     refreshLayout.finishRefresh();
                     refreshLayout.setEnableRefresh(true);
-                    dialog.loadFail();
                     dialog.dismiss();
                     e.printStackTrace();
                 }
             }, error -> {
                 refreshLayout.finishRefresh();
                 refreshLayout.setEnableRefresh(true);
-                dialog.loadFail();
                 dialog.dismiss();
             }, params);
         } else {
@@ -286,13 +283,8 @@ public class Person extends Fragment implements View.OnClickListener {
     //装饰加载条
     private void decorateLoading() {
         if (dialog == null) {
-            LoadingDialog.Builder builder = new LoadingDialog.Builder(context);
-            builder.setLoading_text(getText(R.string.loading))
-                    .setSuccess_text(getText(R.string.success))
-                    .setFail_text(getText(R.string.fail));
-            dialog = builder.create();
+            dialog = new SpotsDialog(context);
             dialog.setCanceledOnTouchOutside(false);
-            dialog.setCancelable(false);
         }
     }
 

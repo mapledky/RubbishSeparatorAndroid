@@ -19,13 +19,14 @@ import com.maple.rubbishseparator.network.HttpHelper;
 import com.maple.rubbishseparator.network.ServerCode;
 import com.maple.rubbishseparator.network.VollySimpleRequest;
 import com.maple.rubbishseparator.util.ViewControl;
-import com.wega.library.loadingDialog.LoadingDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import dmax.dialog.SpotsDialog;
 
 public class CheckSms extends PermissionActivity implements View.OnClickListener {
 
@@ -36,7 +37,7 @@ public class CheckSms extends PermissionActivity implements View.OnClickListener
     private EditText et_inputsms;
     private Button bt_check;
 
-    private LoadingDialog loadingDialog;//加载
+    private SpotsDialog loadingDialog;//加载
 
 
     @Override
@@ -106,7 +107,7 @@ public class CheckSms extends PermissionActivity implements View.OnClickListener
     }
 
     private void sendSms() {
-        loadingDialog.loading();
+        loadingDialog.show();
         Map<String, String> params = new HashMap<>();
         params.put("requestCode", ServerCode.REQUEST_SMS);
         params.put("phoneNumber", phoneNumber);
@@ -118,21 +119,17 @@ public class CheckSms extends PermissionActivity implements View.OnClickListener
                     //id有效,成功
                     Toast.makeText(CheckSms.this, getResources().getString(R.string.send_success), Toast.LENGTH_SHORT).show();
                     sms_code = jsonObject.getString("sms_id");
-                    loadingDialog.loadSuccess();
                 } else if (result.equals("2")) {
                     Toast.makeText(CheckSms.this, getResources().getString(R.string.send_frequet), Toast.LENGTH_SHORT).show();
-                    loadingDialog.loadFail();
                 } else {
                     Toast.makeText(CheckSms.this, getResources().getString(R.string.fail), Toast.LENGTH_SHORT).show();
                 }
                 loadingDialog.dismiss();
             } catch (JSONException e) {
-                loadingDialog.loadFail();
                 loadingDialog.dismiss();
                 e.printStackTrace();
             }
         }, error -> {
-            loadingDialog.loadFail();
             loadingDialog.dismiss();
         }, params);
     }
@@ -140,20 +137,15 @@ public class CheckSms extends PermissionActivity implements View.OnClickListener
 
     //装饰加载条
     private void decorateLoading() {
-        LoadingDialog.Builder builder = new LoadingDialog.Builder(this);
-        builder.setLoading_text(getText(R.string.loading))
-                .setSuccess_text(getText(R.string.success))
-                .setFail_text(getText(R.string.fail));
-        loadingDialog = builder.create();
+        loadingDialog = new SpotsDialog(this);
         loadingDialog.setCanceledOnTouchOutside(false);
-        loadingDialog.setCancelable(false);
     }
 
     private void checkSms() {
         if (phoneNumber != null && sms != null && sms_code != null) {
             if (sms.length() == 4) {
                 //检测二维码
-                loadingDialog.loading();
+                loadingDialog.show();
                 Map<String, String> params = new HashMap<>();
                 params.put("requestCode", ServerCode.CHECK_SMS);
                 params.put("phoneNumber", phoneNumber);
@@ -166,22 +158,18 @@ public class CheckSms extends PermissionActivity implements View.OnClickListener
                         if (result.equals("1")) {
                             //id有效,成功
                             String user_id = jsonObject.getString("user_id");
-                            loadingDialog.loadSuccess();
                             loginSuccess(user_id);
                         } else if (result.equals("2")) {
                             Toast.makeText(CheckSms.this, getResources().getString(R.string.message_error), Toast.LENGTH_SHORT).show();
-                            loadingDialog.loadFail();
                         } else {
                             Toast.makeText(CheckSms.this, getResources().getString(R.string.fail), Toast.LENGTH_SHORT).show();
                         }
                         loadingDialog.dismiss();
                     } catch (JSONException e) {
-                        loadingDialog.loadFail();
                         loadingDialog.dismiss();
                         e.printStackTrace();
                     }
                 }, error -> {
-                    loadingDialog.loadFail();
                     loadingDialog.dismiss();
                 }, params);
             }

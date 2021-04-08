@@ -5,18 +5,14 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.maple.rubbishseparator.R;
 import com.maple.rubbishseparator.adapter.PersonOrderAdapter;
-import com.maple.rubbishseparator.fragment.Person;
 import com.maple.rubbishseparator.network.HttpHelper;
 import com.maple.rubbishseparator.network.ServerCode;
 import com.maple.rubbishseparator.network.VollySimpleRequest;
 import com.maple.rubbishseparator.util.UserOrder;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.wega.library.loadingDialog.LoadingDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +21,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import dmax.dialog.SpotsDialog;
 
 public class PersonOrder extends PermissionActivity implements PersonOrderAdapter.FinishListener {
     //data
@@ -36,7 +34,7 @@ public class PersonOrder extends PermissionActivity implements PersonOrderAdapte
 
     private PersonOrderAdapter adapter;
     //view
-    private LoadingDialog dialog;
+    private SpotsDialog dialog;
     private SmartRefreshLayout refreshLayout;
     private ListView listView;
 
@@ -70,7 +68,7 @@ public class PersonOrder extends PermissionActivity implements PersonOrderAdapte
 
 
     private void getData() {
-        dialog.loading();
+        dialog.show();
         Map<String, String> params = new HashMap<>();
         params.put("requestCode", ServerCode.GETUSERORDER);
         params.put("Id", user_id);
@@ -117,14 +115,12 @@ public class PersonOrder extends PermissionActivity implements PersonOrderAdapte
             refreshLayout.finishLoadMore();
             refreshLayout.setEnableRefresh(true);
             refreshLayout.setEnableLoadMore(true);
-            dialog.loadSuccess();
             dialog.dismiss();
         }, volleyError -> {
             refreshLayout.finishRefresh();
             refreshLayout.finishLoadMore();
             refreshLayout.setEnableRefresh(true);
             refreshLayout.setEnableLoadMore(true);
-            dialog.loadFail();
             dialog.dismiss();
         }, params);
     }
@@ -156,7 +152,7 @@ public class PersonOrder extends PermissionActivity implements PersonOrderAdapte
 
     @Override
     public void finishOrder(int position) {
-        dialog.loading();
+        dialog.show();
         Map<String, String> params = new HashMap<>();
         params.put("requestCode", ServerCode.SETORDER);
         params.put("Id", user_id);
@@ -174,10 +170,8 @@ public class PersonOrder extends PermissionActivity implements PersonOrderAdapte
                 e.printStackTrace();
             }
 
-            dialog.loadSuccess();
             dialog.dismiss();
         }, volleyError -> {
-            dialog.loadFail();
             dialog.dismiss();
         }, params);
     }
@@ -217,13 +211,8 @@ public class PersonOrder extends PermissionActivity implements PersonOrderAdapte
     //装饰加载条
     private void decorateLoading() {
         if (dialog == null) {
-            LoadingDialog.Builder builder = new LoadingDialog.Builder(this);
-            builder.setLoading_text(getText(R.string.loading))
-                    .setSuccess_text(getText(R.string.success))
-                    .setFail_text(getText(R.string.fail));
-            dialog = builder.create();
-            dialog.setCanceledOnTouchOutside(false);
-            dialog.setCancelable(false);
+           dialog = new SpotsDialog(this);
+           dialog.setCanceledOnTouchOutside(false);
         }
     }
 

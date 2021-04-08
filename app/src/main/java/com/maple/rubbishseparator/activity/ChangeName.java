@@ -16,13 +16,14 @@ import com.maple.rubbishseparator.R;
 import com.maple.rubbishseparator.network.HttpHelper;
 import com.maple.rubbishseparator.network.ServerCode;
 import com.maple.rubbishseparator.network.VollySimpleRequest;
-import com.wega.library.loadingDialog.LoadingDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import dmax.dialog.SpotsDialog;
 
 public class ChangeName extends PermissionActivity {
     //data
@@ -32,7 +33,7 @@ public class ChangeName extends PermissionActivity {
     //view
     private EditText et_name;
     private Button bt_upload;
-    private LoadingDialog dialog;
+    private SpotsDialog dialog;
 
 
     @Override
@@ -65,7 +66,7 @@ public class ChangeName extends PermissionActivity {
     }
 
     private void uploadname(String name) {
-        dialog.loading();
+        dialog.show();
         Map<String, String> params = new HashMap<>();
         params.put("requestCode", ServerCode.CHANGE_NAME);
         params.put("phoneNumber", phoneNumber);
@@ -82,10 +83,8 @@ public class ChangeName extends PermissionActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            dialog.loadSuccess();
             dialog.dismiss();
         }, volleyError -> {
-            dialog.loadFail();
             dialog.dismiss();
         }, params);
     }
@@ -93,14 +92,8 @@ public class ChangeName extends PermissionActivity {
     //装饰加载条
     private void decorateLoading() {
         if (dialog == null) {
-            LoadingDialog.Builder builder = new LoadingDialog.Builder(this);
-            builder.setLoading_text(getText(R.string.loading))
-                    .setSuccess_text(getText(R.string.success))
-                    .setFail_text(getText(R.string.fail));
-
-            dialog = builder.create();
+            dialog = new SpotsDialog(this);
             dialog.setCanceledOnTouchOutside(false);
-            dialog.setCancelable(false);
         }
     }
 }

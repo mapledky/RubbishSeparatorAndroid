@@ -33,7 +33,6 @@ import com.maple.rubbishseparator.util.StoreState;
 import com.maple.rubbishseparator.util.UploadUtil;
 import com.maple.rubbishseparator.util.ViewControl;
 import com.maple.rubbishseparator.view.CustomDialog_1;
-import com.wega.library.loadingDialog.LoadingDialog;
 
 
 import org.json.JSONException;
@@ -49,6 +48,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import dmax.dialog.SpotsDialog;
+
 import static java.lang.String.valueOf;
 
 public class ChangeHead extends PermissionActivity implements View.OnClickListener, CustomDialog_1.OnTextViewSelectedListener {
@@ -59,7 +60,7 @@ public class ChangeHead extends PermissionActivity implements View.OnClickListen
     private String imageUri;//图片的最终手机地址
 
 
-    private LoadingDialog dialog;
+    private SpotsDialog dialog;
     private ImageView iv_head;
     private Button bt_change;
 
@@ -97,7 +98,7 @@ public class ChangeHead extends PermissionActivity implements View.OnClickListen
     }
 
     private void getUserInfo() {
-        dialog.loading();
+        dialog.show();
         Map<String, String> params = new HashMap<>();
         params.put("requestCode", ServerCode.GETID_EFFIT);
         params.put("Id", user_id);
@@ -109,17 +110,17 @@ public class ChangeHead extends PermissionActivity implements View.OnClickListen
                 if (!jsonObject.getString("headstate").equals("0")) {
                     String headstate = jsonObject.getString("headstate");
                     Glide.with(ChangeHead.this).load(headstate).into(iv_head);
-                    dialog.loadSuccess();
+
                     dialog.dismiss();
                 } else {
-                    dialog.loadFail();
+
                     dialog.dismiss();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }, volleyError -> {
-            dialog.loadFail();
+
             dialog.dismiss();
         }, params);
     }
@@ -218,7 +219,7 @@ public class ChangeHead extends PermissionActivity implements View.OnClickListen
 
     //上传图片
     private void uploadImage() {
-        dialog.loading();
+        dialog.show();
         new Thread(() -> {
             UploadUtil uploadUtil = new UploadUtil();
             uploadUtil.setListener(message -> uploaddata());
@@ -237,17 +238,17 @@ public class ChangeHead extends PermissionActivity implements View.OnClickListen
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("result").equals("1")) {
-                    dialog.loadSuccess();
+
                     dialog.dismiss();
                 } else {
-                    dialog.loadFail();
+
                     dialog.dismiss();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }, volleyError -> {
-            dialog.loadFail();
+
             dialog.dismiss();
         }, params);
     }
@@ -380,14 +381,8 @@ public class ChangeHead extends PermissionActivity implements View.OnClickListen
     //装饰加载条
     private void decorateLoading() {
         if (dialog == null) {
-            LoadingDialog.Builder builder = new LoadingDialog.Builder(this);
-            builder.setLoading_text(getText(R.string.loading))
-                    .setSuccess_text(getText(R.string.success))
-                    .setFail_text(getText(R.string.fail));
-
-            dialog = builder.create();
+            dialog = new SpotsDialog(this);
             dialog.setCanceledOnTouchOutside(false);
-            dialog.setCancelable(false);
         }
     }
 

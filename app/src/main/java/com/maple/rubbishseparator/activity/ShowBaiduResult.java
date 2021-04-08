@@ -16,7 +16,6 @@ import com.maple.rubbishseparator.adapter.BaiduAdapter;
 import com.maple.rubbishseparator.network.HttpHelper;
 
 import com.maple.rubbishseparator.util.BaiduPicResult;
-import com.wega.library.loadingDialog.LoadingDialog;
 
 
 import org.json.JSONArray;
@@ -26,11 +25,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import dmax.dialog.SpotsDialog;
+
 
 public class ShowBaiduResult extends PermissionActivity implements BaiduAdapter.ChooseBaiduResultListener{
     private String imageurl;
 
-    private LoadingDialog dialog;
+    private SpotsDialog dialog;
     private ListView lv_result;
 
 
@@ -58,20 +59,14 @@ public class ShowBaiduResult extends PermissionActivity implements BaiduAdapter.
 
     //装饰加载条
     private void decorateLoading() {
-        LoadingDialog.Builder builder = new LoadingDialog.Builder(this);
-        builder.setLoading_text(getText(R.string.loading))
-                .setSuccess_text(getText(R.string.success))
-                .setFail_text(getText(R.string.fail));
-        dialog = builder.create();
+        dialog = new SpotsDialog(this);
         dialog.setCanceledOnTouchOutside(false);
-        dialog.setCancelable(false);
     }
 
     private void uploadimageToBaidu() {
-        dialog.loading();
+        dialog.show();
         AipImageClassify classify = new AipImageClassify(HttpHelper.BAIDU_APP_ID, HttpHelper.BAIDU_SECRET_ID, HttpHelper.BAIDU_SECRET_KEY);
         JSONObject res = classify.advancedGeneral(imageurl, new HashMap<>());
-        dialog.loadSuccess();
         dialog.dismiss();
         ArrayList<BaiduPicResult> results = new ArrayList<>();
         try {
@@ -83,7 +78,7 @@ public class ShowBaiduResult extends PermissionActivity implements BaiduAdapter.
                     jsonObject = jsonArray.getJSONObject(i);
                     result.name = jsonObject.getString("keyword");
                     double match = jsonObject.getDouble("score");
-                    result.match = String.valueOf(((int)match*100));
+                    result.match = String.valueOf(((int)(match*100.0)));
                     results.add(result);
                 }
             }

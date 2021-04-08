@@ -16,7 +16,6 @@ import com.maple.rubbishseparator.adapter.ResultAdapter;
 import com.maple.rubbishseparator.network.HttpHelper;
 import com.maple.rubbishseparator.network.VollySimpleRequest;
 import com.maple.rubbishseparator.util.RubbishUtil;
-import com.wega.library.loadingDialog.LoadingDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,10 +25,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import dmax.dialog.SpotsDialog;
+
 public class ShowResult extends PermissionActivity {
     private String search_target;
 
-    private LoadingDialog dialog;
+    private SpotsDialog dialog;
 
     //view
     private TextView tv_name;
@@ -62,7 +63,7 @@ public class ShowResult extends PermissionActivity {
     }
 
     private void getData() {
-        dialog.loading();
+        dialog.show();
         Map<String, String> params = new HashMap<>();
         String url = HttpHelper.GETRUBBISHINFO + "?key=" + HttpHelper.TIANXIN_KEY + "&word=" + search_target;
         VollySimpleRequest.getInstance(this).sendStringRequest(Request.Method.GET, url, response -> {
@@ -88,16 +89,14 @@ public class ShowResult extends PermissionActivity {
                     //数据返回为空
                     iv_empty.setVisibility(View.VISIBLE);
                 }
-                dialog.loadSuccess();
+
                 dialog.dismiss();
             } catch (JSONException e) {
-                dialog.loadFail();
                 dialog.dismiss();
                 e.printStackTrace();
             }
         }, error -> {
             Log.i("search", error.toString());
-            dialog.loadFail();
             dialog.dismiss();
         }, params);
     }
@@ -105,12 +104,7 @@ public class ShowResult extends PermissionActivity {
 
     //装饰加载条
     private void decorateLoading() {
-        LoadingDialog.Builder builder = new LoadingDialog.Builder(this);
-        builder.setLoading_text(getText(R.string.loading))
-                .setSuccess_text(getText(R.string.success))
-                .setFail_text(getText(R.string.fail));
-        dialog = builder.create();
+        dialog = new SpotsDialog(this);
         dialog.setCanceledOnTouchOutside(false);
-        dialog.setCancelable(false);
     }
 }

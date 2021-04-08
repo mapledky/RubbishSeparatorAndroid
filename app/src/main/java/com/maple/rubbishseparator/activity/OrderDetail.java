@@ -21,7 +21,6 @@ import com.maple.rubbishseparator.network.VollySimpleRequest;
 import com.maple.rubbishseparator.util.CanUtil;
 import com.maple.rubbishseparator.util.DepthPagerTransformer;
 import com.maple.rubbishseparator.util.UserOrder;
-import com.wega.library.loadingDialog.LoadingDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,13 +32,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import dmax.dialog.SpotsDialog;
+
 public class OrderDetail extends PermissionActivity {
     //data
     UserOrder order;
     private String order_id;
 
     //view
-    private LoadingDialog dialog;
+    private SpotsDialog dialog;
     private ViewPager viewPager;
 
     private TextView tv_price;
@@ -74,13 +75,12 @@ public class OrderDetail extends PermissionActivity {
     }
 
     private void getInfo() {
-        dialog.loading();
+        dialog.show();
         Map<String, String> params = new HashMap<>();
         params.put("requestCode", ServerCode.GETORDERBYID);
         params.put("Id", order_id);
 
         VollySimpleRequest.getInstance(this).sendStringRequest(Request.Method.POST, HttpHelper.MAIN_MOBILE, s -> {
-            dialog.loadSuccess();
             dialog.dismiss();
             try {
                 JSONObject jsonObject = new JSONObject(s);
@@ -102,7 +102,6 @@ public class OrderDetail extends PermissionActivity {
                 e.printStackTrace();
             }
         }, volleyError -> {
-            dialog.loadFail();
             dialog.dismiss();
         }, params);
     }
@@ -138,14 +137,8 @@ public class OrderDetail extends PermissionActivity {
     //装饰加载条
     private void decorateLoading() {
         if (dialog == null) {
-            LoadingDialog.Builder builder = new LoadingDialog.Builder(this);
-            builder.setLoading_text(getText(R.string.loading))
-                    .setSuccess_text(getText(R.string.success))
-                    .setFail_text(getText(R.string.fail));
-
-            dialog = builder.create();
+            dialog = new SpotsDialog(this);
             dialog.setCanceledOnTouchOutside(false);
-            dialog.setCancelable(false);
         }
     }
 
